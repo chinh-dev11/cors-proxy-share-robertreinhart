@@ -4,13 +4,15 @@ import styles from "../styles/Home.module.css";
 
 export default function Home() {
   const apiHanlder = async () => {
-    // const url = "https://cors-proxy-share-robertreinhart.vercel.app/";
-    const url = "/querybatch";
+    // const url = "https://cors-proxy-share-robertreinhart.vercel.app/api";
+    const url = "/api";
     const response = await fetch(url, {
       method: "POST",
       headers: {
-        "my-url": "https://api.osv.dev/v1/querybatch",
         "Content-Type": "application/json",
+      },
+      body: {
+        "my-url": "https://api.osv.dev/v1/querybatch",
       },
     });
     console.log(response);
