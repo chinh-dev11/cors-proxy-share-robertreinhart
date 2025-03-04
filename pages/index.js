@@ -4,25 +4,54 @@ import styles from "../styles/Home.module.css";
 
 export default function Home() {
   const apiHanlder = async () => {
-    // const url = "https://cors-proxy-share-robertreinhart.vercel.app/api";
-    const url = "/api";
+    const url = "/api/osv";
     const response = await fetch(url, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        api: "https://api.osv.dev/v1/querybatch",
       },
       body: JSON.stringify({
-        // myUrl: "https://api.osv.dev/v1/querybatch",
-        packages: [
+        payload: [
           {
-            name: "express",
-            version: "4.17.1",
+            package: {
+              name: "next",
+              ecosystem: "npm",
+            },
+            version: "13.5.6",
+          },
+          {
+            package: {
+              name: "rollup",
+              ecosystem: "npm",
+            },
+            version: "4.9.6",
+          },
+          {
+            package: {
+              name: "vue",
+              ecosystem: "npm",
+            },
+            version: "3.2.29",
+          },
+          {
+            package: {
+              name: "nanoid",
+              ecosystem: "npm",
+            },
+            version: "3.3.7",
+          },
+          {
+            package: {
+              name: "vite",
+              ecosystem: "npm",
+            },
+            version: "2.6.4",
           },
         ],
       }),
     });
-    // debugger;
-    console.log(response);
+
     const data = await response.json();
     console.log(JSON.parse(data));
   };
