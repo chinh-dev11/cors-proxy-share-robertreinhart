@@ -11,11 +11,20 @@ export default function Home() {
       headers: {
         "Content-Type": "application/json",
       },
-      body: {
-        "my-url": "https://api.osv.dev/v1/querybatch",
-      },
+      body: JSON.stringify({
+        // myUrl: "https://api.osv.dev/v1/querybatch",
+        packages: [
+          {
+            name: "express",
+            version: "4.17.1",
+          },
+        ],
+      }),
     });
+    // debugger;
     console.log(response);
+    const data = await response.json();
+    console.log(JSON.parse(data));
   };
   return (
     <div className={styles.container}>
