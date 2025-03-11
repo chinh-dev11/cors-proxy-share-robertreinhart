@@ -1,15 +1,26 @@
 import Head from "next/head";
 import Image from "next/image";
 import styles from "../styles/Home.module.css";
+import { useEffect, useState } from "react";
 
 export default function Home() {
+  const [msg, setMsg] = useState("");
+  useEffect(() => {
+    console.log("process", process);
+    setMsg(`Hello from ${process.env.DB_HOST}`);
+  }, []);
+
   const apiHanlder = async () => {
-    const url = "/api/osv";
-    const response = await fetch(url, {
+    const api = "/api/osv"; // Next.js - API Route: The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as API routes instead of React pages.
+    const endpoint = "/querybatch";
+    console.log("process", process);
+    console.log("process.env", process.env);
+    const response = await fetch(api, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        api: "https://api.osv.dev/v1/querybatch",
+        api: process.env.NEXT_API_BASEURL_OSV, // "https://api.osv.dev/v1",
+        endpoint,
       },
       body: JSON.stringify({
         payload: [
@@ -53,7 +64,8 @@ export default function Home() {
     });
 
     const data = await response.json();
-    console.log(JSON.parse(data));
+    console.log(data);
+    // console.log(JSON.parse(data).results);
   };
   return (
     <div className={styles.container}>
@@ -65,6 +77,7 @@ export default function Home() {
 
       <main className={styles.main}>
         <button onClick={apiHanlder}>Fetch</button>
+        <div>*** {msg}</div>
         <h1 className={styles.title}>
           Welcome to <a href="https://nextjs.org">Next.js!</a>
         </h1>
